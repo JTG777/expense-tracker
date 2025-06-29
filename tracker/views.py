@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import TrackingHistory,CurrentBalance
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -7,8 +8,11 @@ def index(request):
         current_balance,created=CurrentBalance.objects.get_or_create(id=1)
         amount=request.POST.get('amount')
         description=request.POST.get('description')
-
         expense_type='credit' if float(amount)>0 else 'debit'
+
+        if float(amount)==0:
+            messages.warning(request,"Amount cannot be zero")
+            return redirect('index')
         
         tracking_history=TrackingHistory.objects.create(amount=amount,description=description,expense_type=expense_type,current_balance=current_balance)
         current_balance.current_balance+=float(tracking_history.amount)
