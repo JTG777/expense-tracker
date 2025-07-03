@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
 from .models import TrackingHistory,CurrentBalance
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='login')
 def index(request):
     if request.method=='POST':
         current_balance,created=CurrentBalance.objects.get_or_create(id=1)
@@ -41,6 +43,7 @@ def index(request):
     
     return render(request,'index.html',context)
 
+@login_required(login_url='login')
 def remove_transaction(request,pk):
     transaction=TrackingHistory.objects.get(id=pk)
     current_balance=CurrentBalance.objects.get(id=1)

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div>
+    <h3 class="mx-auto">Login Page</h3>
+<form method="POST" id="form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="text">Username</label>
+          <input name="username" type="text" id="text" placeholder="Enter username" />
+        </div>
+        <div class="form-group">
+          <label for=""
+            >Password <br />
+            
+        <input class="form-control" type="password" name="password" id="" placeholder="Enter password">
+        <p>Don't have an account <a href="{% url 'register' %}">Register here</a></p>        
+        </div>
+        <button type="submit" class="btn">Login</button>
+</form>
+
+</div>
+
+
+{% endblock %}
